@@ -24,12 +24,3 @@ pub fn take_measurement() -> HashMap<String, f32> {
 
     return result;
 }
-
-#[cfg(test)]
-mod tests {
-
-    #[test]
-    fn internal() {
-        assert_eq!(4, take_measurement());
-    }
-}
