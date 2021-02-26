@@ -1,15 +1,20 @@
 {
   "name": "webserver",
+  "repository": {},
   "version": "1.0.0",
-  "description": "",
+  "description": "simple server to deliver weather data",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Eric Kulchycki",
   "license": "ISC",
   "dependencies": {
-    "@feathersjs/feathers": "^4.5.11"
+    "@feathersjs/express": "^4.5.11",
+    "@feathersjs/feathers": "^4.5.11",
+    "@feathersjs/socketio": "^4.5.11",
+    "md5": "^2.3.0",
+    "sqlite3": "^5.0.2"
   }
 }
