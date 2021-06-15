@@ -11,25 +11,25 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname));
 
-//REST Support
-app.configure(express.rest());
-app.configure(socketio());
-
 // Error Handler
 app.use(express.errorHandler());
 
-// Create instance of DB
-const db = require("./db");
+app.configure(socketio());
 
-app.get("/results", (req, res) => {
-  db.get("SELECT * FROM readings", (rows) => {
-    console.log(rows);
-  });
-});
+class ReadingService {
+  async find(params) {}
+  async get(id, params) {}
+  async create(data, params) {}
+  async update(id, data, params) {}
+  async patch(id, data, params) {}
+  async remove(id, params) {}
+}
 
-app.on("connection", (connection) => {
-  app.channel("weatherData").join(connection);
-});
+app.use("readings", new ReadingService());
+
+const readingsService = app.service("readings");
+
+readingsService.on("create", (message) => console.log(message));
 
 app.listen(8080).on("listening", () => {
   console.log("App Listening on Port: 8080");

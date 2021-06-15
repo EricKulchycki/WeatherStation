@@ -1,55 +1,31 @@
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Drawer,
-  Toolbar,
-} from "@material-ui/core";
-import EqualizerIcon from "@material-ui/icons/Equalizer";
-import DataUsageIcon from "@material-ui/icons/DataUsage";
+import { useRouter } from "next/router";
+import { Button, Sidebar, Nav } from "grommet";
+import { Action, BarChart } from "grommet-icons";
 
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-}));
-
-const Menu: React.FunctionComponent = (props) => {
-  const styles = useStyles();
-
+function Menu() {
+  const router = useRouter();
   return (
-    <Drawer
-      variant="permanent"
-      className={styles.drawer}
-      classes={{
-        paper: styles.drawerPaper,
-      }}
+    <Sidebar
+      background="neutral-2"
+      fill="horizontal"
+      flex="grow"
+      width={{ max: "100px" }}
+      header={<div />}
     >
-      <Toolbar />
-      <List style={{ paddingTop: "2rem" }}>
-        <ListItem button>
-          <ListItemIcon>
-            <EqualizerIcon />
-          </ListItemIcon>
-          <ListItemText>Graph View</ListItemText>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <DataUsageIcon />
-          </ListItemIcon>
-          <ListItemText>Data View</ListItemText>
-        </ListItem>
-      </List>
-    </Drawer>
+      <Nav gap="small">
+        <Button
+          icon={<BarChart size="large" />}
+          hoverIndicator
+          onClick={() => router.push("/")}
+        />
+        <Button
+          icon={<Action size="large" />}
+          hoverIndicator
+          onClick={() => router.push("/socketPage")}
+        />
+      </Nav>
+    </Sidebar>
   );
-};
+}
 
 export default Menu;
