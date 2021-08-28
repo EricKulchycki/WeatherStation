@@ -2,6 +2,27 @@ const feathers = require("@feathersjs/feathers");
 const express = require("@feathersjs/express");
 const socketio = require("@feathersjs/socketio");
 
+class ReadingService {
+  constructor() {
+    this.readings = [];
+  }
+
+  async find() {
+    return this.readings;
+  }
+
+  async create(data) {
+    const reading = {
+      temp: data.temp,
+      humidity: data.humidity,
+    };
+
+    this.readings.push(reading);
+
+    return reading;
+  }
+}
+
 const app = express(feathers());
 
 // Parse HTTP JSON bodies
@@ -15,22 +36,17 @@ app.use(express.static(__dirname));
 app.use(express.errorHandler());
 
 app.configure(socketio());
+app.configure(express.rest());
 
-class ReadingService {
-  async find(params) {}
-  async get(id, params) {}
-  async create(data, params) {}
-  async update(id, data, params) {}
-  async patch(id, data, params) {}
-  async remove(id, params) {}
-}
+app.use("/readings", new ReadingService());
 
-app.use("readings", new ReadingService());
+// New Connection, connect to stream channel
+app.on("connection", (conn) => app.channel("stream").join(conn));
+//Publish events to stream
+app.publish((data) => app.channel("stream"));
 
-const readingsService = app.service("readings");
+const PORT = process.env.PORT || 8080;
 
-readingsService.on("create", (message) => console.log(message));
-
-app.listen(8080).on("listening", () => {
-  console.log("App Listening on Port: 8080");
+app.listen(PORT).on("listening", () => {
+  console.log(`App Listening on Port: ${PORT}`);
 });

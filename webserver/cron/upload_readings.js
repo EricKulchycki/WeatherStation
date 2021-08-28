@@ -9,11 +9,27 @@ const app = feathers();
 // Set up Socket.io client with the socket
 app.configure(socketio(socket));
 
-function emitReadings(readings) {
-  app.emit("create", "readings", { readings });
+function createReadingRequest(row) {
+  app.service("readings").create({
+    temp: row.temp,
+    humidity: row.humidity,
+  });
+}
+
+function handleRows(rows) {
+  rows.forEach((row) => {
+    createReadingRequest(row);
+  });
 }
 
 db.get("SELECT * FROM readings;", (err, rows) => {
-  console.log(rows);
-  emitReadings(rows);
+  handleRows(rows);
 });
+
+/* FOR TESTING WEBSOCKETS LOCALLY */
+// Promise.resolve([
+//   { temp: 10, humidity: 5 },
+//   { temp: 11, humidity: 5 },
+// ]).then((rows) => {
+//   handleRows(rows);
+// });
