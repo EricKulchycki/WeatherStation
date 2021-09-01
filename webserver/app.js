@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const feathers = require("@feathersjs/feathers");
 const express = require("@feathersjs/express");
 const socketio = require("@feathersjs/socketio");

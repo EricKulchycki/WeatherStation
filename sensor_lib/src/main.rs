@@ -7,16 +7,16 @@ use rusqlite::{Connection, Result};
 use std::{thread, time};
 
 fn main() -> Result<()> {
-    let conn = Connection::open("./weather-station/WeatherBoi.db")?;
+    let conn = Connection::open("/db/weather.db")?;
     let mut db_ret: DB = DB::new(&conn);
     db_ret.create_table();
 
     loop {
         let reading = i2c::take_measurement();
 
-        if reading.contains_key("temperature") && reading.contains_key("humidity") {
+        if reading.contains_key("temp") && reading.contains_key("humidity") {
             &db_ret.insert_reading(
-                &reading.get("temperature").unwrap(),
+                &reading.get("temp").unwrap(),
                 &reading.get("humidity").unwrap(),
             );
         }

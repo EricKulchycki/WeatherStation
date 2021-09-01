@@ -12,10 +12,10 @@ impl<'a> DB<'a> {
 
     pub fn create_table(&mut self) -> () {
          match self.connection.execute(
-            "CREATE TABLE readings(
+            "CREATE TABLE IF NOT EXISTS readings(
             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            temperature REAL NOT NULL,
-            humidity READ NOT NULL,
+            temp NUMERIC NOT NULL,
+            humidity NUMERIC NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);",
             NO_PARAMS,
         ) {
@@ -28,7 +28,7 @@ impl<'a> DB<'a> {
         self.connection.execute("BEGIN TRANSACTION;", NO_PARAMS)?;
 
         match self.connection.execute(
-            "INSERT INTO readings(temperature, humidity) VALUES (:temperature, :humidity)",
+            "INSERT INTO readings(temp, humidity) VALUES (:temp, :humidity)",
             &[&temp.to_string(), &humidity.to_string()],
         ) {
             Ok(updated) => println!("{} rows were updated", updated),

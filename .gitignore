@@ -1,4 +1,5 @@
 target
 .envrc
+checklist.md
 
 node_modules

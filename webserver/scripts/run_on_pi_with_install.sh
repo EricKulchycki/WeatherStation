@@ -5,5 +5,7 @@ set -o nounset
 set -o pipefail
 set -o xtrace
 
-rsync -r -a /home/erickulchycki/Documents/WeatherStation/webserver ${TARGET_HOST}:~/
-ssh -t ${TARGET_HOST} ./webserver/scripts/run_app_with_install.sh
+echo ${PROJECT_PATH}
+
+rsync -r -a ${PROJECT_PATH}/WeatherStation/webserver ${TARGET_HOST}:/WeatherStation
+ssh -t ${TARGET_HOST} /WeatherStation/webserver/scripts/run_app_with_install.sh

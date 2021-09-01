@@ -17,7 +17,7 @@ pub fn take_measurement() -> HashMap<String, f32> {
     let mut result: HashMap<String, f32> = HashMap::new();
 
     result.insert("humidity".to_string(), measurements.humidity);
-    result.insert("temperature".to_string(), measurements.temperature);
+    result.insert("temp".to_string(), measurements.temperature);
 
     println!("Relative Humidity = {}%", measurements.humidity);
     println!("Temperature = {} deg C", measurements.temperature);
