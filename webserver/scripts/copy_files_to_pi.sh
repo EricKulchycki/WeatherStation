@@ -7,4 +7,4 @@ set -o xtrace
 
 echo ${PROJECT_PATH}
 
-rsync -r -a ${PROJECT_PATH}/WeatherStation/webserver ${TARGET_HOST}:/WeatherStation
+rsync -r -a ${PROJECT_PATH}/WeatherStation/webserver ${TARGET_HOST}:/home/pi/WeatherStation

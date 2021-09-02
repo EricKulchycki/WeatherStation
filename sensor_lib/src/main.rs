@@ -7,7 +7,7 @@ use rusqlite::{Connection, Result};
 use std::{thread, time};
 
 fn main() -> Result<()> {
-    let conn = Connection::open("/db/weather.db")?;
+    let conn = Connection::open("/home/pi/weather.db")?;
     let mut db_ret: DB = DB::new(&conn);
     db_ret.create_table();
 
