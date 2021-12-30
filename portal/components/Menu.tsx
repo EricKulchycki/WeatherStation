@@ -18,11 +18,6 @@ function Menu() {
           hoverIndicator
           onClick={() => router.push("/")}
         />
-        <Button
-          icon={<Action size="large" />}
-          hoverIndicator
-          onClick={() => router.push("/socketPage")}
-        />
       </Nav>
     </Sidebar>
   );
