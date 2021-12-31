@@ -2,7 +2,7 @@
 Description=Base Socket Server
 
 [Service]
-ExecStart=/home/pi/WeatherStation/webserver/app.js
+ExecStart=/home/pi/WeatherStation/webserver/src/app.js
 Restart=always
 User=pi
 

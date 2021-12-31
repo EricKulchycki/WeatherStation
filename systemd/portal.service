@@ -1,0 +1,10 @@
+[Unit]
+Description=Web Portal
+
+[Service]
+ExecStart=/home/pi/WeatherStation/portal/node_modules/.bin/next start
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
