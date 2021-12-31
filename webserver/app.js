@@ -3,6 +3,7 @@
 const feathers = require("@feathersjs/feathers");
 const express = require("@feathersjs/express");
 const socketio = require("@feathersjs/socketio");
+const cron = require('node-cron');
 const { ReadingService } = require("./readingService");
 
 const app = express(feathers());
@@ -16,7 +17,7 @@ app.use(express.errorHandler());
 
 app.configure(socketio());
 
-app.use("/readings", new ReadingService(app));
+app.use("/readings", new ReadingService());
 
 // Add any new real-time connection to the `everybody` channel
 app.on('connection', connection =>
@@ -39,5 +40,13 @@ app.io.on('connection', (socket) => {
   socket.emit("news", { text: "New Connection!" });
 });
 
-// Really just need a scheduler to run a script that gets newest readings and publishes to reading service create
+// Function that runs on a schedule to fetch newest readings
+cron.schedule('10 * * * * *', () => {
+  console.log("Finding readings");
+  const readings = app.service("readings");
+  readings.find().then((readings) => {
+    console.log(readings);
+    app.io.emit('updated_readings', readings);
+  });
+});
 

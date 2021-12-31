@@ -17,14 +17,9 @@ export default function Home() {
         console.log({ message: "Recieved existing data", data });
       });
 
-      readings.on("created", (payload) => {
-        setReadings(prev => {
-          return [
-            ...prev,
-            payload
-          ]
-        });
-        console.log({ message: "Reading Created", payload });
+      socket.io.on('updated_readings', data => {
+        setReadings(data);
+        console.log({ message: "Recieved updated data", data });
       });
     }
   }, [socket]);
